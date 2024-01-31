@@ -1,13 +1,9 @@
 # Manage a network resource within VKCS
-# External net (Internet) 
+# Internet 
 data "vkcs_networking_network" "extnet" {
    name = "ext-net"
 }
-
-data "vkcs_networking_network" "extnet2" {
-   name = "ext-net"
-}
-
+# Local net 
 resource "vkcs_networking_network" "network" {
    name = "net"
 }
@@ -23,21 +19,9 @@ resource "vkcs_networking_router" "router" {
    admin_state_up      = true
    external_network_id = data.vkcs_networking_network.extnet.id
 }
-resource "vkcs_networking_router_interface" "db" {
+resource "vkcs_networking_router_interface" "intrface" {
    router_id = vkcs_networking_router.router.id
    subnet_id = vkcs_networking_subnet.subnetwork.id
-}
-
-resource "vkcs_networking_port" "port" {
-   name = "port_1"
-   admin_state_up = "true"
-   network_id = vkcs_networking_network.network.id
-
-   fixed_ip {
-   subnet_id =  vkcs_networking_subnet.subnetwork.id
-   ip_address = "192.168.199.23"
-   }
-
 }
 
 # Manage a security group resource within VKCS

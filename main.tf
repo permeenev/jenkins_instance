@@ -68,28 +68,28 @@ resource "vkcs_compute_instance" "deploy_instance" {
   ]
 }
 
-resource "vkcs_networking_floatingip" "fip2" {
-  pool = data.vkcs_networking_network.extnet2.name
-}
-
-resource "vkcs_compute_floatingip_associate" "fip2" {
-  floating_ip = vkcs_networking_floatingip.fip2.address
-  instance_id = vkcs_compute_instance.jenkins_instance.id
-}
-
-output "instance_fip2" {
-  value = vkcs_networking_floatingip.fip2.address
-}
-
-resource "vkcs_networking_floatingip" "fip" {
+resource "vkcs_networking_floatingip" "jenkins_fip" {
   pool = data.vkcs_networking_network.extnet.name
 }
 
-resource "vkcs_compute_floatingip_associate" "fip" {
-  floating_ip = vkcs_networking_floatingip.fip.address
+resource "vkcs_compute_floatingip_associate" "jenkins_fip" {
+  floating_ip = vkcs_networking_floatingip.jenkins_fip.address
+  instance_id = vkcs_compute_instance.jenkins_instance.id
+}
+
+output "jenkins_fip" {
+  value = vkcs_networking_floatingip.jenkins_fip.address
+}
+
+resource "vkcs_networking_floatingip" "deploy_fip" {
+  pool = data.vkcs_networking_network.extnet.name
+}
+
+resource "vkcs_compute_floatingip_associate" "deploy_fip" {
+  floating_ip = vkcs_networking_floatingip.deploy_fip.address
   instance_id = vkcs_compute_instance.deploy_instance.id
 }
 
-output "instance_fip" {
-  value = vkcs_networking_floatingip.fip.address
+output "deploy_fip" {
+  value = vkcs_networking_floatingip.deploy_fip.address
 }
