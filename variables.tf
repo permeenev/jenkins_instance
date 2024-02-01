@@ -5,7 +5,7 @@ variable "jenkins_image_flavor" {
 
 variable "jenkins_flavor" {
   type = string
-  default = "STD2-4-4"
+  default = "STD2-4-8"
 }
 
 variable "key_pair_name" {
