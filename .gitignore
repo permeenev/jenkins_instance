@@ -1,2 +1,4 @@
 vkcs_provider.tf
 .terraform/*
+terraform.tfstate
+terraform.tfstate.backup
